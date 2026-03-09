@@ -100,7 +100,7 @@
 				EE000009 /* Views */,
 				BB000025 /* Assets.xcassets */,
 			);
-			path = BankongSetonStudent;
+			name = BankongSetonStudent;
 			sourceTree = "<group>";
 		};
 		EE000002 /* App */ = {
