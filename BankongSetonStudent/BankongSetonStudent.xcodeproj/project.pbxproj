@@ -31,6 +31,7 @@
 		AA000022 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000022 /* SettingsViewModel.swift */; };
 		AA000023 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000023 /* SettingsView.swift */; };
 		AA000024 /* LostCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000024 /* LostCardView.swift */; };
+		AA000025 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB000025 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		BB000023 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BB000024 /* LostCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostCardView.swift; sourceTree = "<group>"; };
 		CC000001 /* BankongSetonStudent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BankongSetonStudent.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB000025 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				EE000007 /* Models */,
 				EE000008 /* ViewModels */,
 				EE000009 /* Views */,
+				BB000025 /* Assets.xcassets */,
 			);
 			path = BankongSetonStudent;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA000025 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
