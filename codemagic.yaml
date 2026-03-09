@@ -20,6 +20,34 @@ workflows:
       - name: Set Xcode version
         script: xcode-select -p
 
+      - name: Debug clone contents
+        script: |
+          echo "=== Repo root ==="
+          ls -la
+          echo "=== BankongSetonStudent dir ==="
+          ls -la BankongSetonStudent/ || echo "MISSING: BankongSetonStudent/"
+          echo "=== App dir ==="
+          ls -la BankongSetonStudent/App/ || echo "MISSING: BankongSetonStudent/App/"
+          echo "=== Core dir ==="
+          ls -la BankongSetonStudent/Core/ || echo "MISSING: BankongSetonStudent/Core/"
+          echo "=== Models dir ==="
+          ls -la BankongSetonStudent/Models/ || echo "MISSING: BankongSetonStudent/Models/"
+          echo "=== ViewModels dir ==="
+          ls -la BankongSetonStudent/ViewModels/ || echo "MISSING: BankongSetonStudent/ViewModels/"
+          echo "=== Views dir ==="
+          ls -la BankongSetonStudent/Views/ || echo "MISSING: BankongSetonStudent/Views/"
+          echo "=== Assets ==="
+          ls -la BankongSetonStudent/Assets.xcassets/ || echo "MISSING: Assets.xcassets/"
+          echo "=== xcodeproj ==="
+          ls -la BankongSetonStudent/BankongSetonStudent.xcodeproj/ || echo "MISSING: xcodeproj/"
+          echo "=== git status ==="
+          git status
+          echo "=== git log ==="
+          git log --oneline -5
+
+      - name: Force checkout all tracked files
+        script: git checkout HEAD -- .
+
       - name: Install dependencies (if needed)
         script: |
           cd BankongSetonStudent
@@ -38,7 +66,8 @@ workflows:
             -configuration Debug \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO \
+            ENABLE_USER_SCRIPT_SANDBOXING=NO
 
       - name: Invariant checks
         script: |
