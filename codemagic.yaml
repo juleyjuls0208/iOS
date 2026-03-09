@@ -1,0 +1,80 @@
+workflows:
+  ios-student-app:
+    name: BankongSeton Student iOS
+    instance_type: mac_mini_m2
+    max_build_duration: 30
+
+    environment:
+      xcode: 15.4
+      cocoapods: default
+
+    triggering:
+      events:
+        - push
+        - pull_request
+      branch_patterns:
+        - pattern: main
+          include: true
+
+    scripts:
+      - name: Set Xcode version
+        script: xcode-select -p
+
+      - name: Install dependencies (if needed)
+        script: |
+          cd BankongSetonStudent
+          if [ -f "Podfile" ]; then
+            pod install
+          else
+            echo "No Podfile — pure SwiftUI project, skipping CocoaPods"
+          fi
+
+      - name: Build (Simulator — no signing required)
+        script: |
+          xcodebuild build \
+            -project BankongSetonStudent/BankongSetonStudent.xcodeproj \
+            -scheme BankongSetonStudent \
+            -destination "generic/platform=iOS Simulator" \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcpretty --color && exit ${PIPESTATUS[0]}
+
+      - name: Invariant checks
+        script: |
+          echo "--- Checking for Philippine Peso symbol ---"
+          if grep -r "฿" BankongSetonStudent/; then
+            echo "FAIL: Thai Baht symbol found — expected ₱ only"
+            exit 1
+          else
+            echo "PASS: No ฿ found"
+          fi
+
+          echo "--- Checking for deprecated NavigationView ---"
+          if grep -rn "NavigationView" BankongSetonStudent/; then
+            echo "FAIL: deprecated NavigationView found"
+            exit 1
+          else
+            echo "PASS: No NavigationView"
+          fi
+
+          echo "--- Checking MainTabView has no stubs ---"
+          if grep -n "struct BudgetView\|struct SettingsView" BankongSetonStudent/Views/MainTabView.swift; then
+            echo "FAIL: stubs found in MainTabView.swift"
+            exit 1
+          else
+            echo "PASS: No stubs in MainTabView.swift"
+          fi
+
+    artifacts:
+      - BankongSetonStudent/build/**/*.app
+      - /tmp/xcodebuild_logs/*.log
+
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true
